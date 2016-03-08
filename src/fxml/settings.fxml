@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerSettings">
+   <children>
+      <AnchorPane prefHeight="50.0" prefWidth="600.0">
+         <children>
+            <ComboBox fx:id="comboboxLanguages" layoutX="117.0" layoutY="13.0" prefWidth="150.0" AnchorPane.leftAnchor="120.0" />
+            <Button fx:id="buttonApply" layoutX="304.0" layoutY="13.0" mnemonicParsing="false" onAction="#actionButtonClicked" AnchorPane.leftAnchor="300.0" />
+            <Label fx:id="labelLanguage" layoutX="34.0" layoutY="17.0" AnchorPane.leftAnchor="35.0" />
+         </children>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>

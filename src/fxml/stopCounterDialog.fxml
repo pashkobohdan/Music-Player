@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerCounterStop">
+   <children>
+      <Button fx:id="buttonOk" layoutX="165.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionButtonClicked" prefHeight="25.0" prefWidth="80.0" text="ok" AnchorPane.rightAnchor="0.0" />
+      <Button fx:id="buttonCancel" layoutX="163.0" layoutY="63.0" mnemonicParsing="false" onAction="#actionButtonClicked" prefHeight="25.0" prefWidth="80.0" text="cancel" AnchorPane.rightAnchor="0.0" />
+      <Button fx:id="buttonDelete" layoutX="185.0" layoutY="107.0" mnemonicParsing="false" onAction="#actionButtonClicked" prefHeight="25.0" prefWidth="80.0" text="delete" AnchorPane.rightAnchor="0.0" />
+      <ComboBox fx:id="comboBoxCount" layoutX="14.0" layoutY="107.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.leftAnchor="0.0" />
+      <TextField fx:id="textFieldCount" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.leftAnchor="0.0" />
+      <Label fx:id="labelCount" layoutX="14.0" layoutY="25.0" AnchorPane.leftAnchor="0.0" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</AnchorPane>

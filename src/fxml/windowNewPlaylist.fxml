@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerNewPlaylist">
+   <children>
+      <AnchorPane prefHeight="189.0" prefWidth="569.0">
+         <children>
+            <Label fx:id="labelSetName" layoutY="6.0" />
+            <TextField fx:id="playlistName" layoutX="36.0" layoutY="2.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.rightAnchor="0.0" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="buttonOk" defaultButton="true" layoutY="80.0" mnemonicParsing="false" onAction="#buttonOkPressed" prefHeight="25.0" prefWidth="105.0" text="Ok" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+            <Button fx:id="buttonCancel" cancelButton="true" layoutX="182.0" layoutY="41.0" mnemonicParsing="false" onAction="#buttonCancelPressed" prefHeight="25.0" prefWidth="105.0" text="Cancel" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </AnchorPane>
+   </children>
+</VBox>

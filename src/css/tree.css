@@ -1,0 +1,13 @@
+.tree-cell{
+    -fx-background-color: #F2F2FF;
+    -fx-text-fill: black;
+    -fx-font: 13px italic ;
+}
+
+.tree-cell:hover {
+    -fx-background-color: #C5C5E8 ;
+}
+
+.tree-cell:focused{
+    -fx-background-color: wheat ;
+}
