@@ -53,7 +53,6 @@ public class Controller implements Initializable{
     public static final String JPG_FILE_EXPANTION = ".jpg";
     public static final String JPEG_FILE_EXPANTION = ".jpeg";
     public static final String MP3_FILE_EXPANTION = ".mp3";
-    public static final String FLAC_FILE_EXPANTION = ".ape";
 
     public static final String STOP_TIME_DIALOG_PATH = "../fxml/stopTimeDialog.fxml";
     public static final String STOP_COUNTER_DIALOG_PATH = "../fxml/stopCounterDialog.fxml";

@@ -175,7 +175,6 @@ public class Playlist {
     }               // чтение с файла плейлиста
     private boolean isDirectory(String fileName){
         if(fileName.contains(Controller.MP3_FILE_EXPANTION) ||
-                fileName.contains(Controller.FLAC_FILE_EXPANTION) ||
                 fileName.contains(Controller.PNG_FILE_EXPANTION) || 
                 fileName.contains(Controller.JPG_FILE_EXPANTION) || 
                 fileName.contains(Controller.JPEG_FILE_EXPANTION)){
@@ -215,7 +214,7 @@ public class Playlist {
             number++;
         }
         for(File file : new File(path).listFiles()){
-            if(file.isFile() && (file.getAbsolutePath().contains(Controller.MP3_FILE_EXPANTION) || file.getAbsolutePath().contains(Controller.FLAC_FILE_EXPANTION))){
+            if(file.isFile() && file.getAbsolutePath().contains(Controller.MP3_FILE_EXPANTION)){
                 workSong=new Song(file);
                 workSong.setNumber(number++);
                 songArrayList.add(workSong);
