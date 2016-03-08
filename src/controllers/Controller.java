@@ -318,7 +318,9 @@ public class Controller implements Initializable{
         }
     }
     private void openFirstPlaylist(){
-        openPlaylist(playlistNames.get(Song.INDEX_ZERO));
+        if(playlistNames.size() > Song.INDEX_ZERO) {
+            openPlaylist(playlistNames.get(Song.INDEX_ZERO));
+        }
     }
     private void nextPlaylist(){
         index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
