@@ -13,8 +13,8 @@ import java.util.Random;
 public class Playlist {
     public static final String ROOT_PATH_NAME = "Music";
     public static final String PROJECT_PATH = System.getProperty("user.dir");
-    public static final String PLAYLIST_PATH = PROJECT_PATH + "\\src\\playlists";
-    public static final String PLAYLIST_FILES = PLAYLIST_PATH + "\\";
+    public static final String PLAYLIST_PATH = PROJECT_PATH + "/src/playlists";
+    public static final String PLAYLIST_FILES = PLAYLIST_PATH + "/";
     public static final String PLAYLIST_EXPANTION = ".mppl";
     public static final String LINE_SEPARATOR = "\n";
 

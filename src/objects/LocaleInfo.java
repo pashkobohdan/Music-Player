@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LocaleInfo {
-    public static final String LOCALE_PATH = Controller.PROJECT_PATH + "\\src\\bundles";
-    public static final String MAIN_LANGUAGE_PATH = Controller.PROJECT_PATH + "\\src\\language\\mainLanguage.txt";
+    public static final String LOCALE_PATH = Controller.PROJECT_PATH + "/src/bundles";
+    public static final String MAIN_LANGUAGE_PATH = Controller.PROJECT_PATH + "/src/language/mainLanguage.txt";
 
     public static int countLanguages(){
         return new File(LOCALE_PATH).listFiles().length;

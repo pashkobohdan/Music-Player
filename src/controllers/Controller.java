@@ -39,10 +39,10 @@ public class Controller implements Initializable{
     public static final double MIN_VOLUME = 0.0;
     public static final String EMPTY_STRING = "";
     public static final String PROJECT_PATH = System.getProperty("user.dir");
-    public static final String PICTURES_PATH = PROJECT_PATH+"\\src\\pictures";
-    public static final String PICTURES_FILES = PICTURES_PATH + "\\";
-    public static final String PLAYLISTS_PATH = PROJECT_PATH+"\\src\\playlists";
-    public static final String PLAYLISTS_FILES = PLAYLISTS_PATH + "\\";
+    public static final String PICTURES_PATH = PROJECT_PATH+"/src/pictures";
+    public static final String PICTURES_FILES = PICTURES_PATH + "/";
+    public static final String PLAYLISTS_PATH = PROJECT_PATH+"/src/playlists";
+    public static final String PLAYLISTS_FILES = PLAYLISTS_PATH + "/";
     public static final String PLAYLIST_EXPANTION = ".mppl";
     public static final String TIME_FORMAT = "%02d:%02d";
     public static final String DEFAULT_TIME = "00:00";
