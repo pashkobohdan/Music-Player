@@ -24,7 +24,7 @@ public class StopCount {
     }
 
     public boolean isChanged() {
-        return count!=DEFAULT_COUNT;
+        return count != DEFAULT_COUNT;
     }
 
     public void setCount(int count) {

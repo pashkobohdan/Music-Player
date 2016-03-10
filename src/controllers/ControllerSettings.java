@@ -9,15 +9,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import objects.LocaleInfo;
+
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class ControllerSettings implements Initializable{
-    @FXML private Label labelLanguage;
-    @FXML private Button buttonApply;
-    @FXML private ComboBox<String> comboboxLanguages;
+public class ControllerSettings implements Initializable {
+    @FXML
+    private Label labelLanguage;
+    @FXML
+    private Button buttonApply;
+    @FXML
+    private ComboBox<String> comboboxLanguages;
 
     private List<String> languages;
     private Controller controller;
@@ -29,8 +33,8 @@ public class ControllerSettings implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
         Locale locale;
-        languages =  LocaleInfo.languagesList();
-        for(String language : languages){
+        languages = LocaleInfo.languagesList();
+        for (String language : languages) {
             locale = new Locale(language);
             comboboxLanguages.getItems().add(locale.getDisplayLanguage(locale));
         }
@@ -38,6 +42,7 @@ public class ControllerSettings implements Initializable{
         locale = new Locale(LocaleInfo.readMainLanguage());
         comboboxLanguages.getSelectionModel().select(locale.getDisplayLanguage(locale));
     }
+
     public void setResourceBundle(ResourceBundle resourceBundle) {
         labelLanguage.setText(resourceBundle.getString("key.dialog.settings.labelLanguages.Text"));
         buttonApply.setText(resourceBundle.getString("key.button.apply"));
@@ -52,16 +57,17 @@ public class ControllerSettings implements Initializable{
     }
 
     public void actionButtonClicked(ActionEvent actionEvent) {
-        if(!(actionEvent.getSource() instanceof Button)){
+        if (!(actionEvent.getSource() instanceof Button)) {
             return;
         }
 
-        switch (((Button)actionEvent.getSource()).getId()){
-            case "buttonApply" :
+        switch (((Button) actionEvent.getSource()).getId()) {
+            case "buttonApply":
                 buttonApply();
                 break;
         }
     }
+
     private void buttonApply() {
 
         alert.showAndWait();
@@ -90,8 +96,7 @@ public class ControllerSettings implements Initializable{
 
                 stage.setScene(new Scene(root));
                 stage.show();
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

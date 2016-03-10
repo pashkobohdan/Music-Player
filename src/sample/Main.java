@@ -18,7 +18,7 @@ public class Main extends Application {
     private Scene scene;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("../fxml/main.fxml"));
@@ -37,12 +37,12 @@ public class Main extends Application {
 
         primaryStage.show();
     }
+
     private void selectLanguage() {
         mainLanguage = LocaleInfo.readMainLanguage();
-        if(mainLanguage != null) {
+        if (mainLanguage != null) {
             fxmlLoader.setResources(ResourceBundle.getBundle("bundles.Locale", new Locale(mainLanguage)));
-        }
-        else {
+        } else {
             fxmlLoader.setResources(ResourceBundle.getBundle("bundles.Locale", Locale.getDefault()));
         }
     }

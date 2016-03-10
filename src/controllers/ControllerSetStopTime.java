@@ -8,13 +8,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import objects.StopTimeInfo;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerSetStopTime implements Initializable{
-    @FXML private Button buttonOk,buttonCancel,buttonDelete;
-    @FXML private Label labelHours,labelMinute,labelSecond;
-    @FXML private ComboBox<Integer> comboboxHours,comboboxMinute,comboboxSecond;
+public class ControllerSetStopTime implements Initializable {
+    @FXML
+    private Button buttonOk, buttonCancel, buttonDelete;
+    @FXML
+    private Label labelHours, labelMinute, labelSecond;
+    @FXML
+    private ComboBox<Integer> comboboxHours, comboboxMinute, comboboxSecond;
 
     private StopTimeInfo stopTimeInfo;
 
@@ -22,25 +26,26 @@ public class ControllerSetStopTime implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for(int i=0 ; i<25 ; i++){
+        for (int i = 0; i < 25; i++) {
             comboboxHours.getItems().add(i);
         }
-        for(int i=0 ; i<60 ; i++){
+        for (int i = 0; i < 60; i++) {
             comboboxMinute.getItems().add(i);
         }
-        for(int i=0 ; i<60 ; i++){
+        for (int i = 0; i < 60; i++) {
             comboboxSecond.getItems().add(i);
         }
     }
 
-    public void setStopTimeInfo(StopTimeInfo stopTimeInfo){
+    public void setStopTimeInfo(StopTimeInfo stopTimeInfo) {
         isCancel = false;
         this.stopTimeInfo = stopTimeInfo;
         comboboxHours.getSelectionModel().select(stopTimeInfo.getHours());
         comboboxMinute.getSelectionModel().select(stopTimeInfo.getMinute());
         comboboxSecond.getSelectionModel().select(stopTimeInfo.getSecond());
     }
-    public void setResourceBundle(ResourceBundle resourceBundle){
+
+    public void setResourceBundle(ResourceBundle resourceBundle) {
         labelHours.setText(resourceBundle.getString("key.dialog.stopTime.hours"));
         labelMinute.setText(resourceBundle.getString("key.dialog.stopTime.minute"));
         labelSecond.setText(resourceBundle.getString("key.dialog.stopTime.second"));
@@ -50,29 +55,30 @@ public class ControllerSetStopTime implements Initializable{
         buttonDelete.setText(resourceBundle.getString("key.button.delete"));
     }
 
-    public void close(ActionEvent actionEvent){
-        (((Node)actionEvent.getSource()).getScene().getWindow()).hide();
+    public void close(ActionEvent actionEvent) {
+        (((Node) actionEvent.getSource()).getScene().getWindow()).hide();
     }
 
-    public void refreshStopTimeInfo(){
+    public void refreshStopTimeInfo() {
         stopTimeInfo.setHours(comboboxHours.getValue());
         stopTimeInfo.setMinute(comboboxMinute.getValue());
         stopTimeInfo.setSecond(comboboxSecond.getValue());
     }
 
-    public void deleteStopTime(){
+    public void deleteStopTime() {
         comboboxHours.getSelectionModel().select(StopTimeInfo.DEFAULT_VALUES);
         comboboxMinute.getSelectionModel().select(StopTimeInfo.DEFAULT_VALUES);
         comboboxSecond.getSelectionModel().select(StopTimeInfo.DEFAULT_VALUES);
 
         refreshStopTimeInfo();
     }
+
     public void actionButtonPressed(ActionEvent actionEvent) {
-        if(!(actionEvent.getSource() instanceof Button)){
+        if (!(actionEvent.getSource() instanceof Button)) {
             return;
         }
 
-        switch (((Button)actionEvent.getSource()).getId()){
+        switch (((Button) actionEvent.getSource()).getId()) {
             case "buttonOk":
                 refreshStopTimeInfo();
                 close(actionEvent);

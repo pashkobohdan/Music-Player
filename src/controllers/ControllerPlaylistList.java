@@ -8,18 +8,22 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class ControllerPlaylistList {
-    @FXML private Button buttonAdd, buttonDelete;
-    @FXML private ListView<String> listNames;
-    @FXML private TextField textFiledName;
+    @FXML
+    private Button buttonAdd, buttonDelete;
+    @FXML
+    private ListView<String> listNames;
+    @FXML
+    private TextField textFiledName;
 
     private String defaultPlaylistName;
 
-    public void setResourceBundle(ResourceBundle resourceBundle){
+    public void setResourceBundle(ResourceBundle resourceBundle) {
         buttonAdd.setText(resourceBundle.getString("key.button.add"));
         buttonDelete.setText(resourceBundle.getString("key.button.delete"));
 
@@ -29,7 +33,8 @@ public class ControllerPlaylistList {
         textFiledName.setText(resourceBundle.getString("key.dialog.playlistList.textFieldName.text"));
         defaultPlaylistName = textFiledName.getText();
     }
-    public void setNames(ObservableList<String> observableList){
+
+    public void setNames(ObservableList<String> observableList) {
         textFiledName.setText(defaultPlaylistName);
 
         listNames.setEditable(true);
@@ -42,16 +47,16 @@ public class ControllerPlaylistList {
         textFiledName.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if(event.getCode() == KeyCode.ENTER &&
-                        !textFiledName.getText().equals(defaultPlaylistName)){
+                if (event.getCode() == KeyCode.ENTER &&
+                        !textFiledName.getText().equals(defaultPlaylistName)) {
                     createFile();
                 }
             }
         });
     }
 
-    public void createFile(){
-        if(textFiledName.getText().length() < 1) {
+    public void createFile() {
+        if (textFiledName.getText().length() < 1) {
             return;
         }
         try {
@@ -60,12 +65,12 @@ public class ControllerPlaylistList {
             listNames.getItems().add(textFiledName.getText());
             listNames.getSelectionModel().selectLast();
             textFiledName.setText(Controller.EMPTY_STRING);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void deleteFile(){
+
+    public void deleteFile() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete \"" + listNames.getSelectionModel().getSelectedItem() + "\" playlist ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
         alert.showAndWait();
 
@@ -77,16 +82,16 @@ public class ControllerPlaylistList {
     }
 
     public void actionButtonClicked(ActionEvent actionEvent) {
-        if(!(actionEvent.getSource() instanceof Button)){
+        if (!(actionEvent.getSource() instanceof Button)) {
             return;
         }
 
-        switch (((Button)actionEvent.getSource()).getId()){
-            case "buttonAdd" :
+        switch (((Button) actionEvent.getSource()).getId()) {
+            case "buttonAdd":
                 createFile();
                 break;
 
-            case "buttonDelete" :
+            case "buttonDelete":
                 deleteFile();
                 break;
         }

@@ -1,6 +1,7 @@
 package objects;
 
 import controllers.Controller;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,39 +14,37 @@ public class LocaleInfo {
     public static final String LOCALE_PATH = Controller.PROJECT_PATH + "/src/bundles";
     public static final String MAIN_LANGUAGE_PATH = Controller.PROJECT_PATH + "/src/language/mainLanguage.txt";
 
-    public static int countLanguages(){
+    public static int countLanguages() {
         return new File(LOCALE_PATH).listFiles().length;
     }
 
-    public static List<String> languagesList(){
+    public static List<String> languagesList() {
         return Arrays.stream(new File(LOCALE_PATH).listFiles())
-                .filter((a)->a.getName().contains(".properties"))
-                .map((a)->a.getName().substring(a.getName().indexOf("_") + 1, a.getName().lastIndexOf(".")))
+                .filter((a) -> a.getName().contains(".properties"))
+                .map((a) -> a.getName().substring(a.getName().indexOf("_") + 1, a.getName().lastIndexOf(".")))
                 .collect(Collectors.toList());
     }
 
-    public static String readMainLanguage(){
+    public static String readMainLanguage() {
 
-        int length = (int)(new File(MAIN_LANGUAGE_PATH).length());
-        try(FileInputStream fileInputStream = new FileInputStream(MAIN_LANGUAGE_PATH)){
+        int length = (int) (new File(MAIN_LANGUAGE_PATH).length());
+        try (FileInputStream fileInputStream = new FileInputStream(MAIN_LANGUAGE_PATH)) {
             byte[] bytes = new byte[length];
             fileInputStream.read(bytes);
 
             return new String(bytes);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
 
         }
         return null;
     }
 
-    public static void writeMainLanguage(String currentLanguage){
-        try(FileOutputStream fileOutputStream = new FileOutputStream(MAIN_LANGUAGE_PATH)){
+    public static void writeMainLanguage(String currentLanguage) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(MAIN_LANGUAGE_PATH)) {
             fileOutputStream.write(currentLanguage.getBytes());
 
             fileOutputStream.close();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
