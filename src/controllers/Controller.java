@@ -307,11 +307,15 @@ public class Controller implements Initializable{
     private void readPlaylistList(){
         playlistNames = FXCollections.observableArrayList();
 
-        System.out.println(new File(PLAYLISTS_PATH).listFiles().length+"");
-
         if(new File(PLAYLISTS_PATH).listFiles().length < 1)
         {
-            return;
+            try {
+                new File(PLAYLISTS_FILES + "default playlist" + PLAYLIST_EXPANTION).createNewFile();
+            }
+            catch (IOException e){
+                e.printStackTrace();
+                return;
+            }
         }
         for(File file : new File(PLAYLISTS_PATH).listFiles()){
             if(file.isFile()){
@@ -325,33 +329,22 @@ public class Controller implements Initializable{
         }
     }
     private void nextPlaylist(){
-        try {
-            index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
-            System.out.println(index);
-            if (index == playlistNames.size() - 1) {
-                index = 0;
-            } else {
-                index++;
-            }
-            openPlaylist(playlistNames.get(index));
+        index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
+        System.out.println(index);
+        if (index == playlistNames.size() - 1) {
+            index = 0;
+        } else {
+            index++;
         }
-        catch (NullPointerException e){
-            e.printStackTrace();
-        }
+        openPlaylist(playlistNames.get(index));
     }
     private void prevPlaylist(){
-        try {
-            index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
-            if(index == 0){
-                index = playlistNames.size()-1;
-            }
-            else{
-                index --;
-            }
-            openPlaylist(playlistNames.get(index));
+        index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
+        if(index == 0){
+            index = playlistNames.size()-1;
         }
-        catch (NullPointerException e){
-            e.printStackTrace();
+        else{
+            index --;
         }
     }
     private void openPlaylist(String name){
