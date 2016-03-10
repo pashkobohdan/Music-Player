@@ -188,7 +188,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Label fx:id="labelNamePlaylist" layoutX="90.0" layoutY="4.0" text="Playlist 1" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="0.0" />
+            <Label fx:id="labelNamePlaylist" layoutX="90.0" layoutY="4.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="0.0" />
             <Button fx:id="buttonAddPlaylist" layoutX="448.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
@@ -213,7 +213,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="328.0" prefWidth="500.0" VBox.vgrow="ALWAYS">
          <children>
-            <TreeView stylesheets="/css/tree.css" fx:id="treeView" layoutY="-6.0" prefHeight="313.0" prefWidth="500.0" styleClass="tree-cell" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-6.0" ></TreeView>
+            <TreeView fx:id="treeView" layoutY="-6.0" prefHeight="313.0" prefWidth="500.0" styleClass="tree-cell" stylesheets="/css/tree.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-6.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="30.0" prefWidth="500.0" style="-fx-background-color: #8989C7;">

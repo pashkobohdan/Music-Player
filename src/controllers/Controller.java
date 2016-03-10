@@ -306,6 +306,9 @@ public class Controller implements Initializable{
 
     private void readPlaylistList(){
         playlistNames = FXCollections.observableArrayList();
+
+        System.out.println(new File(PLAYLISTS_PATH).listFiles().length+"");
+
         if(new File(PLAYLISTS_PATH).listFiles().length < 1)
         {
             return;
@@ -322,25 +325,34 @@ public class Controller implements Initializable{
         }
     }
     private void nextPlaylist(){
-        index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
-        System.out.println(index);
-        if(index == playlistNames.size()-1){
-            index = 0;
+        try {
+            index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
+            System.out.println(index);
+            if (index == playlistNames.size() - 1) {
+                index = 0;
+            } else {
+                index++;
+            }
+            openPlaylist(playlistNames.get(index));
         }
-        else{
-            index ++;
+        catch (NullPointerException e){
+            e.printStackTrace();
         }
-        openPlaylist(playlistNames.get(index));
     }
     private void prevPlaylist(){
-        index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
-        if(index == 0){
-            index = playlistNames.size()-1;
+        try {
+            index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
+            if(index == 0){
+                index = playlistNames.size()-1;
+            }
+            else{
+                index --;
+            }
+            openPlaylist(playlistNames.get(index));
         }
-        else{
-            index --;
+        catch (NullPointerException e){
+            e.printStackTrace();
         }
-        openPlaylist(playlistNames.get(index));
     }
     private void openPlaylist(String name){
         if(getCurrentPlaylist() !=null) {
@@ -520,6 +532,10 @@ public class Controller implements Initializable{
             try {
                 new File(PLAYLISTS_FILES + playlistInfo.getPlaylistName() + PLAYLIST_EXPANTION).createNewFile();
                 playlistNames.add(playlistInfo.getPlaylistName());
+                if(playlistNames.size() < 2){
+                    currentPlaylist = new Playlist(playlistInfo.getPlaylistName());
+                    labelNamePlaylist.setText(currentPlaylist.getPlaylistName());
+                }
             }
             catch (IOException e){
                 e.printStackTrace();
@@ -589,6 +605,10 @@ public class Controller implements Initializable{
         }
 
         playlistListStage.showAndWait();
+
+        if(playlistNames.size() == 1){
+            openFirstPlaylist();
+        }
     }
     private void createSetting(){
         if(settingsStage == null){
