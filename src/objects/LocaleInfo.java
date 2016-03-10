@@ -1,7 +1,6 @@
 package objects;
 
 import controllers.Controller;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -34,7 +33,7 @@ public class LocaleInfo {
 
             return new String(bytes);
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
         return null;
     }
@@ -42,7 +41,6 @@ public class LocaleInfo {
     public static void writeMainLanguage(String currentLanguage) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(MAIN_LANGUAGE_PATH)) {
             fileOutputStream.write(currentLanguage.getBytes());
-
             fileOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();

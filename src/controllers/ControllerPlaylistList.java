@@ -47,8 +47,7 @@ public class ControllerPlaylistList {
         textFiledName.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER &&
-                        !textFiledName.getText().equals(defaultPlaylistName)) {
+                if (event.getCode() == KeyCode.ENTER) {
                     createFile();
                 }
             }
@@ -56,7 +55,7 @@ public class ControllerPlaylistList {
     }
 
     public void createFile() {
-        if (textFiledName.getText().length() < 1) {
+        if (textFiledName.getText().length() < 1 || textFiledName.getText().equals(defaultPlaylistName)) {
             return;
         }
         try {

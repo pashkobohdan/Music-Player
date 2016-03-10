@@ -23,30 +23,23 @@ public class Main extends Application {
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("../fxml/main.fxml"));
 
-        selectLanguage();
-
-        parentRoot = fxmlLoader.load();
-
-        controller = fxmlLoader.getController();
-        controller.setMainStage(primaryStage);
-
-        //primaryStage.initStyle(StageStyle.UNDECORATED);
-
-        scene = new Scene(parentRoot, 500, 600);
-        primaryStage.setScene(scene);
-
-        primaryStage.show();
-    }
-
-    private void selectLanguage() {
         mainLanguage = LocaleInfo.readMainLanguage();
         if (mainLanguage != null) {
             fxmlLoader.setResources(ResourceBundle.getBundle("bundles.Locale", new Locale(mainLanguage)));
         } else {
             fxmlLoader.setResources(ResourceBundle.getBundle("bundles.Locale", Locale.getDefault()));
         }
-    }
 
+        parentRoot = fxmlLoader.load();
+
+        controller = fxmlLoader.getController();
+        controller.setMainStage(primaryStage);
+
+        scene = new Scene(parentRoot, 500, 600);
+        primaryStage.setScene(scene);
+
+        primaryStage.show();
+    }
 
     public static void main(String[] args) {
         launch(args);

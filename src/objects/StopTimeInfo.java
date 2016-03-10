@@ -8,12 +8,6 @@ public class StopTimeInfo {
     private int minute;
     private int second;
 
-    public StopTimeInfo(int hours, int minute, int second) {
-        this.hours = hours;
-        this.minute = minute;
-        this.second = second;
-    }
-
     public StopTimeInfo() {
         hours = DEFAULT_VALUES;
         minute = DEFAULT_VALUES;
