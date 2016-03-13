@@ -1,0 +1,44 @@
+.circleMediumButton{
+    -fx-border-color: chocolate;
+    -fx-border-width: 1px;
+    -fx-border-radius: 30em;
+    -fx-background-color: wheat;
+    -fx-background-radius: 30em;
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+    -fx-max-width: 30px;
+    -fx-max-height: 30px;
+ }
+.circleBgButton{
+    -fx-border-color: chocolate;
+    -fx-border-width: 1px;
+    -fx-border-radius: 30em;
+    -fx-background-color: wheat;
+    -fx-background-radius: 40em;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+}
+.circleDefaultSmallButton{
+    -fx-border-color: chocolate;
+    -fx-border-width: 1px;
+    -fx-border-radius: 15.0;
+    -fx-background-color: wheat;
+    -fx-background-radius: 25em;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-max-width: 25px;
+    -fx-max-height: 25px;
+}
+.circlePressedSmallButton{
+    -fx-border-color: burlywood;
+    -fx-border-width: 1px;
+    -fx-border-radius: 15.0;
+    -fx-background-color: wheat;
+    -fx-background-radius: 25em;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-max-width: 25px;
+    -fx-max-height: 25px;
+}
