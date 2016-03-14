@@ -21,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import objects.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -257,7 +258,6 @@ public class Controller implements Initializable {
         buttonPlaylistList.setTooltip(new Tooltip(resourceBundle.getString("key.button.buttonPlaylistList.ToolTip")));
         buttonOpenFolder.setTooltip(new Tooltip(resourceBundle.getString("key.button.buttonOpenFolder.ToolTip")));
         buttonOpenFiles.setTooltip(new Tooltip(resourceBundle.getString("key.button.buttonOpenFiles.ToolTip")));
-        buttonSearch.setTooltip(new Tooltip(resourceBundle.getString("key.button.buttonSearch.ToolTip")));
     }
 
     private void initSlidersListeners() {
@@ -334,9 +334,9 @@ public class Controller implements Initializable {
     }
 
     private void nextPlaylist() {
-        index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
+        index = playlistNames.indexOf(currentPlaylist.getPlaylistName());
         System.out.println(index);
-        if (index == playlistNames.size() - 1) {
+        if (index >= playlistNames.size() - 1) {
             index = 0;
         } else {
             index++;
@@ -345,12 +345,14 @@ public class Controller implements Initializable {
     }
 
     private void prevPlaylist() {
-        index = playlistNames.indexOf(getCurrentPlaylist().getPlaylistName());
-        if (index == 0) {
+        index = playlistNames.indexOf(currentPlaylist.getPlaylistName());
+        System.out.println(index);
+        if (index <= 0) {
             index = playlistNames.size() - 1;
         } else {
             index--;
         }
+        openPlaylist(playlistNames.get(index));
     }
 
     private void openPlaylist(String name) {
@@ -505,11 +507,11 @@ public class Controller implements Initializable {
     }
 
     private void readPlaylistFromPath(File file) {
-        getCurrentPlaylist().stopCurrentSong();
-        getCurrentPlaylist().readFromPath(file);
-        getCurrentPlaylist().setFirstSong();
+        currentPlaylist.stopCurrentSong();
+        currentPlaylist.readFromPath(file);
+        currentPlaylist.setFirstSong();
         reCheckSong();
-        getCurrentPlaylist().writePlaylist();
+        currentPlaylist.writePlaylist();
     }
 
     private void createNewPlaylist() {
@@ -625,124 +627,10 @@ public class Controller implements Initializable {
         }
 
         settingsStage.show();
-
     }
 
     private void refreshCountLabel() {
         labelCountLeft.setText(stopCount.getCount() + EMPTY_STRING);
-    }
-
-    public void actionButtonPressed(ActionEvent actionEvent) {
-
-        if (!(actionEvent.getSource() instanceof Button)) {
-            return;
-        }
-
-        switch (((Button) actionEvent.getSource()).getId()) {
-            case "buttonSettings":
-                createSetting();
-                break;
-            case "buttonGoToCurrentSong":
-                chooseItemTreeView();
-                treeView.scrollTo(getCurrentPlaylist().getCurrentSong().getNumber());
-                break;
-            case "buttonRewind":
-                getCurrentPlaylist().prevSong();
-                reCheckSong();
-                break;
-            case "buttonStop":
-                getCurrentPlaylist().stopCurrentSong();
-                //reCheckSong();
-                break;
-            case "buttonPlay":
-                getCurrentPlaylist().playCurrentSong();
-                reCheckSong();
-                break;
-            case "buttonPause":
-                getCurrentPlaylist().pauseCurrentSong();
-                //reCheckSong();
-                break;
-            case "buttonForward":
-                getCurrentPlaylist().nextSong();
-                reCheckSong();
-                break;
-            case "buttonReplaySong":
-                createStopCount();
-                break;
-            case "buttonSetStopTime":
-                createStopTime();
-                break;
-            case "buttonShuffle":
-                isShuffle = !isShuffle;
-                if (isShuffle) {
-                    buttonShuffle.setStyle(CUSTOM_BUTTON_PRESSED_STYLE);
-                } else {
-                    buttonShuffle.setStyle(CUSTOM_BUTTON_DEFAULT_STYLE);
-                }
-                break;
-            case "buttonReplay":
-                isRePlay = !isRePlay;
-                if (isRePlay) {
-                    buttonReplay.setStyle(CUSTOM_BUTTON_PRESSED_STYLE);
-                } else {
-                    buttonReplay.setStyle(CUSTOM_BUTTON_DEFAULT_STYLE);
-                }
-                break;
-            case "buttonMute":
-                isMute = !isMute;
-                refreshMuteButton();
-                if (isMute) {
-                    if (getCurrentPlaylist().getCurrentSong().getMediaPlayer() != null) {
-                        getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(MIN_VOLUME);
-                    }
-                    volume = MIN_VOLUME;
-                    sliderVolume.setValue(MIN_VOLUME);
-                } else {
-                    if (getCurrentPlaylist().getCurrentSong().getMediaPlayer() != null) {
-                        getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(DEFAULT_VOLUME / MAX_SLIDER_VALUE);
-                    }
-                    volume = DEFAULT_VOLUME;
-                    sliderVolume.setValue(DEFAULT_VOLUME);
-                }
-                break;
-            case "buttonBack":
-                prevPlaylist();
-                break;
-            case "buttonNext":
-                nextPlaylist();
-                break;
-            case "buttonAddPlaylist":
-                createNewPlaylist();
-                break;
-            case "buttonPlaylistList":
-                createPlaylistList();
-                break;
-            case "buttonOpenFolder":
-                directoryChooser = new DirectoryChooser();
-                directoryChooser.setTitle(resourceBundle.getString("key.setDirectoryChooserTitle"));
-                chooserPath = directoryChooser.showDialog(getMainStage());
-                if (chooserPath != null) {
-                    readPlaylistFromPath(chooserPath);
-                }
-                break;
-            case "buttonOpenFiles":
-                directoryChooser = new DirectoryChooser();
-                directoryChooser.setTitle(resourceBundle.getString("key.dialog.FileChooser.Title"));
-                chooserPath = directoryChooser.showDialog(getMainStage());
-                if (chooserPath != null) {
-                    if (treeView.getRoot() == null) {
-                        readPlaylistFromPath(chooserPath);
-                    } else {
-                        getCurrentPlaylist().readAndAddFromPath(chooserPath);
-                        getCurrentPlaylist().writePlaylist();
-                    }
-                }
-                break;
-            case "buttonSearch":
-
-                break;
-        }
-
     }
 
     public Stage getMainStage() {
@@ -753,6 +641,128 @@ public class Controller implements Initializable {
         return currentPlaylist;
     }
 
+    /**
+     *
+     * @param actionEvent button pressed event
+     */
+    public void buttonSettingsPressed(ActionEvent actionEvent) {
+        createSetting();
+    }
+
+    public void buttonGoToCurrentSongPressed(ActionEvent actionEvent) {
+        chooseItemTreeView();
+        treeView.scrollTo(getCurrentPlaylist().getCurrentSong().getNumber());
+    }
+
+    public void buttonRewindPressed(ActionEvent actionEvent) {
+        getCurrentPlaylist().prevSong();
+        reCheckSong();
+    }
+
+    public void buttonStopPressed(ActionEvent actionEvent) {
+        getCurrentPlaylist().stopCurrentSong();
+    }
+
+    public void buttonPlayPressed(ActionEvent actionEvent) {
+        getCurrentPlaylist().playCurrentSong();
+        reCheckSong();
+    }
+
+    public void buttonPausePressed(ActionEvent actionEvent) {
+        getCurrentPlaylist().pauseCurrentSong();
+    }
+
+    public void buttonForwardPressed(ActionEvent actionEvent) {
+        getCurrentPlaylist().nextSong();
+        reCheckSong();
+    }
+
+    public void buttonSetStopTimePressed(ActionEvent actionEvent) {
+        createStopTime();
+    }
+
+    public void buttonReplaySongPressed(ActionEvent actionEvent) {
+        createStopCount();
+    }
+
+    public void buttonShufflePressed(ActionEvent actionEvent) {
+        isShuffle = !isShuffle;
+        if (isShuffle) {
+            buttonShuffle.setStyle(CUSTOM_BUTTON_PRESSED_STYLE);
+        } else {
+            buttonShuffle.setStyle(CUSTOM_BUTTON_DEFAULT_STYLE);
+        }
+    }
+
+    public void buttonReplayPressed(ActionEvent actionEvent) {
+        isRePlay = !isRePlay;
+        if (isRePlay) {
+            buttonReplay.setStyle(CUSTOM_BUTTON_PRESSED_STYLE);
+        } else {
+            buttonReplay.setStyle(CUSTOM_BUTTON_DEFAULT_STYLE);
+        }
+    }
+
+    public void buttonMutePressed(ActionEvent actionEvent) {
+        isMute = !isMute;
+        refreshMuteButton();
+        if (isMute) {
+            if (getCurrentPlaylist().getCurrentSong().getMediaPlayer() != null) {
+                getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(MIN_VOLUME);
+            }
+            volume = MIN_VOLUME;
+            sliderVolume.setValue(MIN_VOLUME);
+        } else {
+            if (getCurrentPlaylist().getCurrentSong().getMediaPlayer() != null) {
+                getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(DEFAULT_VOLUME / MAX_SLIDER_VALUE);
+            }
+            volume = DEFAULT_VOLUME;
+            sliderVolume.setValue(DEFAULT_VOLUME);
+        }
+    }
+
+    public void buttonBackPressed(ActionEvent actionEvent) {
+        prevPlaylist();
+    }
+
+    public void buttonNextPressed(ActionEvent actionEvent) {
+        nextPlaylist();
+    }
+
+    public void buttonAddPlaylistPressed(ActionEvent actionEvent) {
+        createNewPlaylist();
+    }
+
+    public void buttonPlaylistListPressed(ActionEvent actionEvent) {
+        createPlaylistList();
+    }
+
+    public void buttonOpenFolderPressed(ActionEvent actionEvent) {
+        directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle(resourceBundle.getString("key.setDirectoryChooserTitle"));
+        chooserPath = directoryChooser.showDialog(getMainStage());
+        if (chooserPath != null) {
+            readPlaylistFromPath(chooserPath);
+        }
+    }
+
+    public void buttonOpenFilesPressed(ActionEvent actionEvent) {
+        directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle(resourceBundle.getString("key.dialog.FileChooser.Title"));
+        chooserPath = directoryChooser.showDialog(getMainStage());
+        if (chooserPath != null) {
+            if (treeView.getRoot() == null) {
+                readPlaylistFromPath(chooserPath);
+            } else {
+                getCurrentPlaylist().readAndAddFromPath(chooserPath);
+                getCurrentPlaylist().writePlaylist();
+            }
+        }
+    }
+
+    /**
+     * Class for close window after some time
+     */
     public class MyThread implements Runnable {
         private AtomicBoolean isStop = new AtomicBoolean(false);
         private AtomicInteger second;
@@ -793,7 +803,7 @@ public class Controller implements Initializable {
                         }
                     }
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
             }
 

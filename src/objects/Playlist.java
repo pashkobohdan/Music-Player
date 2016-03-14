@@ -68,16 +68,15 @@ public class Playlist {
     public void nextSong() {
         boolean isPlay = currentSong == null ? false : currentSong.isPlay();
         currentSong.stop();
-
         currentSong.clearSong();
 
-        int index = getSongArrayList().indexOf(currentSong);
-        if (index == getSongArrayList().size() - 1) {
+        int index = songArrayList.indexOf(currentSong);
+        if (index == songArrayList.size() - 1) {
             index = Song.INDEX_ZERO;
         } else {
             index++;
         }
-        currentSong = getSongArrayList().get(index);
+        currentSong = songArrayList.get(index);
         if (isPlay) {
             currentSong.play();
         }
@@ -132,7 +131,7 @@ public class Playlist {
             }
         }
         return false;
-    }     // установка щелкнутой песни
+    }
 
     public void readPlaylist(String fileName) {
         songArrayList = new ArrayList<>();
@@ -176,7 +175,7 @@ public class Playlist {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }               // чтение с файла плейлиста
+    }
 
     private boolean isDirectory(String fileName) {
         if (fileName.contains(Controller.MP3_FILE_EXPANTION) ||
@@ -193,7 +192,9 @@ public class Playlist {
             return;
         }
 
-        try (FileOutputStream fileOutputStream = new FileOutputStream(PLAYLIST_FILES + playlistName + PLAYLIST_EXPANTION)) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(PLAYLIST_FILES
+                + playlistName
+                + PLAYLIST_EXPANTION)) {
             String path = songArrayList.get(Song.INDEX_ZERO).getPathName();
             fileOutputStream.write((path + LINE_SEPARATOR).getBytes());
 
@@ -206,9 +207,11 @@ public class Playlist {
                     fileOutputStream.write((song.getFullname() + LINE_SEPARATOR).getBytes());
                 }
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     private void addPath(String path) {
@@ -236,11 +239,12 @@ public class Playlist {
                 addPath(file.getAbsolutePath());
             }
         }
-    }                       // чтение файлов с заданой папки
+    }
 
     public void readFromPath(File file) {
-        nameOpenPath = file.getName();
-        rootItem = new TreeItem<>(file.getName());
+        nameOpenPath = ROOT_PATH_NAME;
+        rootItem = new TreeItem<>(ROOT_PATH_NAME);
+
         rootItem.setExpanded(true);
         itemPath = null;
 
@@ -284,10 +288,10 @@ public class Playlist {
         String normalName, normalPathName;
 
         for (Song song : songArrayList) {
-            normalName = songNameToNormalName(song.getName());
-            normalPathName = songNameToNormalName(song.getPathName());
+            normalName = StringSearch.stringToNormalString(song.getName());
+            normalPathName = StringSearch.stringToNormalString(song.getPathName());
 
-            if (compareString(normalName, searchString) || compareString(normalPathName, searchString)) {
+            if (StringSearch.compareStrings(normalName, searchString) || StringSearch.compareStrings(normalPathName, searchString)) {
                 if (!song.getPathName().equals(path)) {
                     path = song.getPathName();
                     itemPath = new TreeItem<>(path);
@@ -305,29 +309,6 @@ public class Playlist {
         } else {
             treeView.setRoot(null);
         }
-    }
-
-    private String songNameToNormalName(String source) {
-        String result = source.
-                toLowerCase().
-                replaceAll("\\+", " ").
-                replaceAll("_", " ").
-                replaceAll("-", " ").
-                replaceAll("\\(", " (").
-                replaceAll("\\)", ") ");
-        while (result.contains("  ")) {
-            result = result.replaceAll("  ", " ");
-        }
-        return result;
-    }
-
-    private boolean compareString(String base, String search) {
-        for (String arg : search.split(" ")) {
-            if (!base.contains(arg)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public void setTreeView(TreeView treeView) {

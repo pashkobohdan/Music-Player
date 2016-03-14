@@ -16,7 +16,7 @@
                   <AnchorPane prefHeight="50.0" prefWidth="200.0">
                      <children>
                         <Label fx:id="labelSongName" AnchorPane.topAnchor="0.0" />
-                        <Button fx:id="buttonSettings" layoutX="348.0" layoutY="-4.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.rightAnchor="0.0">
+                        <Button fx:id="buttonSettings" layoutX="348.0" layoutY="-4.0" mnemonicParsing="false" onAction="#buttonSettingsPressed" styleClass="circleMediumButton" AnchorPane.rightAnchor="0.0">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -24,7 +24,7 @@
                                  </image>
                               </ImageView>
                            </graphic></Button>
-                        <Button fx:id="buttonGoToCurrentSong" layoutX="292.0" layoutY="-2.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleDefaultSmallButton" AnchorPane.rightAnchor="40.0">
+                        <Button fx:id="buttonGoToCurrentSong" layoutX="292.0" layoutY="-2.0" mnemonicParsing="false" onAction="#buttonGoToCurrentSongPressed" styleClass="circleDefaultSmallButton" AnchorPane.rightAnchor="40.0">
                            <graphic>
                               <ImageView fitHeight="120.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -39,7 +39,7 @@
                   </AnchorPane>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="buttonRewind" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton">
+                        <Button fx:id="buttonRewind" mnemonicParsing="false" onAction="#buttonRewindPressed" styleClass="circleMediumButton">
                            <HBox.margin>
                               <Insets bottom="3.0" left="3.0" right="3.0" top="4.0" />
                            </HBox.margin>
@@ -50,7 +50,7 @@
                                  </image></ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="buttonStop" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleBgButton">
+                        <Button fx:id="buttonStop" mnemonicParsing="false" onAction="#buttonStopPressed" styleClass="circleBgButton">
                            <HBox.margin>
                               <Insets bottom="3.0" left="3.0" right="3.0" />
                            </HBox.margin>
@@ -61,7 +61,7 @@
                                  </image></ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleBgButton">
+                        <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#buttonPlayPressed" styleClass="circleBgButton">
                            <HBox.margin>
                               <Insets bottom="3.0" left="3.0" right="3.0" />
                            </HBox.margin>
@@ -72,7 +72,7 @@
                                  </image></ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="buttonPause" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleBgButton">
+                        <Button fx:id="buttonPause" mnemonicParsing="false" onAction="#buttonPausePressed" styleClass="circleBgButton">
                            <HBox.margin>
                               <Insets bottom="3.0" left="3.0" right="3.0" />
                            </HBox.margin>
@@ -83,7 +83,7 @@
                                  </image></ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="buttonForward" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton">
+                        <Button fx:id="buttonForward" mnemonicParsing="false" onAction="#buttonForwardPressed" styleClass="circleMediumButton">
                            <HBox.margin>
                               <Insets bottom="3.0" left="3.0" right="3.0" top="4.0" />
                            </HBox.margin>
@@ -96,7 +96,7 @@
                         </Button>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Button fx:id="buttonSetStopTime" layoutX="94.0" layoutY="2.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="4.0">
+                              <Button fx:id="buttonSetStopTime" layoutX="94.0" layoutY="2.0" mnemonicParsing="false" onAction="#buttonSetStopTimePressed" styleClass="circleMediumButton" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="4.0">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -105,7 +105,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button fx:id="buttonReplaySong" layoutX="58.0" layoutY="7.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="4.0">
+                              <Button fx:id="buttonReplaySong" layoutX="58.0" layoutY="7.0" mnemonicParsing="false" onAction="#buttonReplaySongPressed" styleClass="circleMediumButton" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="4.0">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -134,7 +134,7 @@
             <Insets />
          </VBox.margin>
          <children>
-            <Button fx:id="buttonShuffle" layoutX="25.0" layoutY="2.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleDefaultSmallButton" AnchorPane.leftAnchor="5.0">
+            <Button fx:id="buttonShuffle" layoutX="25.0" layoutY="2.0" mnemonicParsing="false" onAction="#buttonShufflePressed" styleClass="circleDefaultSmallButton" AnchorPane.leftAnchor="5.0">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -143,7 +143,7 @@
                   </ImageView>
                </graphic></Button>
             <Slider fx:id="sliderStatus" layoutX="69.0" layoutY="8.0" prefHeight="14.0" prefWidth="194.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="215.0" />
-            <Button fx:id="buttonReplay" layoutX="216.0" layoutY="2.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleDefaultSmallButton" AnchorPane.rightAnchor="150.0">
+            <Button fx:id="buttonReplay" layoutX="216.0" layoutY="2.0" mnemonicParsing="false" onAction="#buttonReplayPressed" styleClass="circleDefaultSmallButton" AnchorPane.rightAnchor="150.0">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -151,7 +151,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="buttonMute" layoutX="301.0" layoutY="2.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleDefaultSmallButton" AnchorPane.rightAnchor="115.0">
+            <Button fx:id="buttonMute" layoutX="301.0" layoutY="2.0" mnemonicParsing="false" onAction="#buttonMutePressed" styleClass="circleDefaultSmallButton" AnchorPane.rightAnchor="115.0">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -172,7 +172,7 @@
             <Insets />
          </VBox.margin>
          <children>
-            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#buttonBackPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -180,7 +180,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="buttonNext" layoutX="31.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="buttonNext" layoutX="31.0" mnemonicParsing="false" onAction="#buttonNextPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="0.0">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -189,7 +189,7 @@
                   </ImageView>
                </graphic></Button>
             <Label fx:id="labelNamePlaylist" layoutX="90.0" layoutY="4.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="0.0" />
-            <Button fx:id="buttonAddPlaylist" layoutX="448.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="buttonAddPlaylist" layoutX="448.0" mnemonicParsing="false" onAction="#buttonAddPlaylistPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -197,7 +197,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="buttonPlaylistList" layoutX="426.0" layoutY="1.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="buttonPlaylistList" layoutX="426.0" layoutY="1.0" mnemonicParsing="false" onAction="#buttonPlaylistListPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="0.0">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -221,7 +221,7 @@
             <Insets />
          </VBox.margin>
          <children>
-            <Button fx:id="buttonOpenFolder" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+            <Button fx:id="buttonOpenFolder" mnemonicParsing="false" onAction="#buttonOpenFolderPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -229,22 +229,14 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="buttonOpenFiles" layoutX="90.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0">
+            <Button fx:id="buttonOpenFiles" layoutX="90.0" mnemonicParsing="false" onAction="#buttonOpenFilesPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icons/open_files.png" />
                      </image></ImageView>
                </graphic></Button>
-            <Button fx:id="buttonSearch" layoutX="430.0" mnemonicParsing="false" onAction="#actionButtonPressed" styleClass="circleMediumButton" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/search.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
-            <TextField fx:id="textSearch" layoutX="197.0" layoutY="5.0" prefHeight="25.0" prefWidth="249.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="40.0" />
+            <TextField fx:id="textSearch" layoutX="197.0" layoutY="5.0" prefHeight="25.0" prefWidth="249.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="0.0" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
