@@ -1,5 +1,6 @@
-package controllers;
+package controllers.dialogControllers;
 
+import controllers.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,12 +9,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import objects.Song;
 import objects.StopCount;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerCounterStop implements Initializable {
+public class ControllerCounterStop extends DialogController implements Initializable {
+    public static int maxComboBox = 100;
+
     @FXML
     private Button buttonOk, buttonCancel, buttonDelete;
     @FXML
@@ -29,7 +33,7 @@ public class ControllerCounterStop implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for (int i = 0; i < 100; i++) {
+        for (int i = Song.INDEX_ZERO; i < maxComboBox; i++) {
             comboBoxCount.getItems().add(i);
         }
 
@@ -54,7 +58,7 @@ public class ControllerCounterStop implements Initializable {
     public void refreshStopCountInfo() {
         try {
             stopCount.setCount(Integer.parseInt(textFieldCount.getText()));
-            textFieldCount.setText("");
+            textFieldCount.setText(Controller.EMPTY_STRING);
         } catch (NumberFormatException e) {
             stopCount.setCount(comboBoxCount.getValue());
         }

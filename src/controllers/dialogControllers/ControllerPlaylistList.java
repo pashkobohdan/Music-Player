@@ -1,5 +1,6 @@
-package controllers;
+package controllers.dialogControllers;
 
+import controllers.Controller;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-public class ControllerPlaylistList {
+public class ControllerPlaylistList extends DialogController {
     @FXML
     private Button buttonAdd, buttonDelete;
     @FXML
@@ -44,14 +45,11 @@ public class ControllerPlaylistList {
         listNames.setItems(observableList);
         listNames.getSelectionModel().selectFirst();
 
-        textFiledName.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
+        textFiledName.setOnKeyReleased((event) -> {
                 if (event.getCode() == KeyCode.ENTER) {
                     createFile();
                 }
-            }
-        });
+            });
     }
 
     public void createFile() {

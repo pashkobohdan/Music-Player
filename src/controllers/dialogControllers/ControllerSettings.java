@@ -1,5 +1,6 @@
-package controllers;
+package controllers.dialogControllers;
 
+import controllers.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class ControllerSettings implements Initializable {
+public class ControllerSettings extends DialogController implements Initializable {
+    public static int sleepTimeBeforeRestart = 50;
+
     @FXML
     private Label labelLanguage;
     @FXML
@@ -31,7 +34,6 @@ public class ControllerSettings implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         Locale locale;
         languages = LocaleInfo.languagesList();
         for (String language : languages) {
@@ -81,7 +83,7 @@ public class ControllerSettings implements Initializable {
                 controller.getCurrentPlaylist().stopCurrentSong();
                 controller.getMainStage().close();
 
-                Thread.sleep(50);
+                Thread.sleep(sleepTimeBeforeRestart);
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("../fxml/main.fxml"));

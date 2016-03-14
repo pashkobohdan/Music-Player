@@ -1,18 +1,16 @@
-package controllers;
+package controllers.dialogControllers;
 
+import controllers.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import objects.PlaylistInfo;
-
-import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerNewPlaylist {
+public class ControllerNewPlaylist extends DialogController{
     @FXML
     private Button buttonOk, buttonCancel;
     @FXML

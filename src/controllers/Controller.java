@@ -1,8 +1,7 @@
 package controllers;
 
+import controllers.dialogControllers.*;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,6 +35,7 @@ public class Controller implements Initializable {
     public static final int DEFAULT_VOLUME = 50;
     public static final int DOUBLE_CLICK = 2;
     public static final int SECOND_IN_MINUTE = 60;
+    public static final int sleepHalfSecond = 500;
     public static final double MAX_SLIDER_VALUE = 100.0;
     public static final double MIN_VOLUME = 0.0;
     public static final String EMPTY_STRING = "";
@@ -54,7 +54,6 @@ public class Controller implements Initializable {
     public static final String JPG_FILE_EXPANTION = ".jpg";
     public static final String JPEG_FILE_EXPANTION = ".jpeg";
     public static final String MP3_FILE_EXPANTION = ".mp3";
-
     public static final String STOP_TIME_DIALOG_PATH = "../fxml/stopTimeDialog.fxml";
     public static final String STOP_COUNTER_DIALOG_PATH = "../fxml/stopCounterDialog.fxml";
     public static final String PLAYLIST_LIST_DIALOG_PATH = "../fxml/playlistList.fxml";
@@ -159,12 +158,10 @@ public class Controller implements Initializable {
         initSettingsWindow();                   //
 
 
-        textSearch.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                getCurrentPlaylist().setTreeViewFromSearchString(textSearch.getText());
-            }
-        });
+        textSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                    getCurrentPlaylist().setTreeViewFromSearchString(textSearch.getText());
+                }
+        );
     }
 
     public void setMainStage(Stage stage) {
@@ -312,7 +309,7 @@ public class Controller implements Initializable {
     private void readPlaylistList() {
         playlistNames = FXCollections.observableArrayList();
 
-        if (new File(PLAYLISTS_PATH).listFiles().length < 1) {
+        if (new File(PLAYLISTS_PATH) != null && new File(PLAYLISTS_PATH).listFiles().length < 1) {
             try {
                 new File(PLAYLISTS_FILES + "default playlist" + PLAYLIST_EXPANTION).createNewFile();
             } catch (IOException e) {
@@ -335,9 +332,8 @@ public class Controller implements Initializable {
 
     private void nextPlaylist() {
         index = playlistNames.indexOf(currentPlaylist.getPlaylistName());
-        System.out.println(index);
         if (index >= playlistNames.size() - 1) {
-            index = 0;
+            index = Song.INDEX_ZERO;
         } else {
             index++;
         }
@@ -346,8 +342,7 @@ public class Controller implements Initializable {
 
     private void prevPlaylist() {
         index = playlistNames.indexOf(currentPlaylist.getPlaylistName());
-        System.out.println(index);
-        if (index <= 0) {
+        if (index <= Song.INDEX_ZERO) {
             index = playlistNames.size() - 1;
         } else {
             index--;
@@ -375,11 +370,11 @@ public class Controller implements Initializable {
                 }
             }
 
-            if (stopCount.getCount() > 0) {
+            if (stopCount.getCount() > Song.INDEX_ZERO) {
                 stopCount.setCount(stopCount.getCount() - 1);
                 refreshCountLabel();
 
-                if (stopCount.getCount() == 0) {
+                if (stopCount.getCount() == Song.INDEX_ZERO) {
                     getCurrentPlaylist().stopCurrentSong();
                 }
             }
@@ -563,7 +558,6 @@ public class Controller implements Initializable {
         }
 
         if (!stopTimeController.isCancel() && stopTimeInfo.isChanged()) {
-            System.out.println(stopTimeInfo);
             myThread = new MyThread(stopTimeInfo.getAllInSecond());
         }
     }
@@ -642,7 +636,6 @@ public class Controller implements Initializable {
     }
 
     /**
-     *
      * @param actionEvent button pressed event
      */
     public void buttonSettingsPressed(ActionEvent actionEvent) {
@@ -769,7 +762,7 @@ public class Controller implements Initializable {
 
         public MyThread(int second) {
             this.second = new AtomicInteger(second);
-            if (second > 0) {
+            if (second > Song.INDEX_ZERO) {
                 new Thread(this).start();
             }
         }
@@ -790,11 +783,11 @@ public class Controller implements Initializable {
                                 ((second.get() % (SECOND_IN_MINUTE * SECOND_IN_MINUTE)) / SECOND_IN_MINUTE),
                                 (second.get() % SECOND_IN_MINUTE))));
 
-                        Thread.sleep(500);
+                        Thread.sleep(sleepHalfSecond);
 
                         Platform.runLater(() -> labelLeftTime.setText(EMPTY_STRING));
 
-                        Thread.sleep(500);
+                        Thread.sleep(sleepHalfSecond);
 
 
                         second.decrementAndGet();

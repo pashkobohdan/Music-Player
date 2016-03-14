@@ -1,5 +1,6 @@
-package controllers;
+package controllers.dialogControllers;
 
+import controllers.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,12 +8,16 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import objects.Song;
 import objects.StopTimeInfo;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerSetStopTime implements Initializable {
+public class ControllerSetStopTime extends DialogController implements Initializable {
+    public static int hoursInDay = 24;
+
+
     @FXML
     private Button buttonOk, buttonCancel, buttonDelete;
     @FXML
@@ -26,13 +31,13 @@ public class ControllerSetStopTime implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for (int i = 0; i < 25; i++) {
+        for (int i = Song.INDEX_ZERO; i < hoursInDay; i++) {
             comboboxHours.getItems().add(i);
         }
-        for (int i = 0; i < 60; i++) {
+        for (int i = Song.INDEX_ZERO; i < Controller.SECOND_IN_MINUTE; i++) {
             comboboxMinute.getItems().add(i);
         }
-        for (int i = 0; i < 60; i++) {
+        for (int i = Song.INDEX_ZERO; i < Controller.SECOND_IN_MINUTE; i++) {
             comboboxSecond.getItems().add(i);
         }
     }
