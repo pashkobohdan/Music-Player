@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class Playlist {
     public static final String ROOT_PATH_NAME = "Music";
@@ -242,8 +243,9 @@ public class Playlist {
     }
 
     public void readFromPath(File file) {
-        nameOpenPath = ROOT_PATH_NAME;
-        rootItem = new TreeItem<>(ROOT_PATH_NAME);
+        String[] pathOfName = file.getAbsolutePath().split(Pattern.quote(File.separator));
+        nameOpenPath = pathOfName[pathOfName.length - 1];
+        rootItem = new TreeItem<>(nameOpenPath);
 
         rootItem.setExpanded(true);
         itemPath = null;

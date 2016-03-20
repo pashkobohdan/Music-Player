@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ControllerCounterStop extends DialogController implements Initializable {
-    public static int maxComboBox = 100;
+    public static final int maxComboBox = 100;
 
     @FXML
     private Button buttonOk, buttonCancel, buttonDelete;

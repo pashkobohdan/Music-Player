@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ControllerSetStopTime extends DialogController implements Initializable {
-    public static int hoursInDay = 24;
+    public static final int hoursInDay = 24;
 
 
     @FXML

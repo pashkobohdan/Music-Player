@@ -8,9 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import objects.PlaylistInfo;
+
 import java.util.ResourceBundle;
 
-public class ControllerNewPlaylist extends DialogController{
+public class ControllerNewPlaylist extends DialogController {
     @FXML
     private Button buttonOk, buttonCancel;
     @FXML

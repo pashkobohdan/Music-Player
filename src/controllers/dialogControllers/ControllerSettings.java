@@ -17,7 +17,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ControllerSettings extends DialogController implements Initializable {
-    public static int sleepTimeBeforeRestart = 50;
+    public static final int sleepTimeBeforeRestart = 50;
 
     @FXML
     private Label labelLanguage;
