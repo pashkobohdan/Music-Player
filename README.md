@@ -1,6 +1,6 @@
 #Music Player
 
-[![latest version](https://raw.githubusercontent.com/pashkobohdan/Music-Player/master/src/pictures/%D0%91%D0%B5%D0%B7%D1%8B%D0%BC%D1%8F%D0%BD%D0%BD%D1%8B%D0%B9.png)](https://github.com/pashkobohdan/Music-Player/releases/tag/0.1)
+[![latest version](https://raw.githubusercontent.com/pashkobohdan/Music-Player/ac5c16b9687abaa55b0113fb92761cfab9f32845/src/pictures/%D0%91%D0%B5%D0%B7%D1%8B%D0%BC%D1%8F%D0%BD%D0%BD%D1%8B%D0%B9.png)](https://github.com/pashkobohdan/Music-Player/releases/tag/0.1)
 
 Music player in javaFX for listening songs in your computer
 
