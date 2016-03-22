@@ -2,13 +2,19 @@ package objects;
 
 import MyLibrary.ReadWrite;
 import controllers.Controller;
+import javafx.event.EventHandler;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.*;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -315,6 +321,120 @@ public class Playlist {
 
     public void setTreeView(TreeView treeView) {
         this.treeView = treeView;
+
+//        treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
+//            @Override
+//            public TreeCell call(TreeView<String> param) {
+//                return new DnDCell(param);
+//            }
+//        });
+    }
+
+    public class DnDCell extends TreeCell<String> {
+
+        private TreeView<String> parentTree;
+
+        public DnDCell(final TreeView<String> parentTree) {
+            this.parentTree = parentTree;
+            // ON SOURCE NODE.
+            setOnDragDetected(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    System.out.println("Drag detected on " + item);
+                    if (item == null) {
+                        return;
+                    }
+                    Dragboard dragBoard = startDragAndDrop(TransferMode.MOVE);
+                    ClipboardContent content = new ClipboardContent();
+                    content.put(DataFormat.PLAIN_TEXT, item.toString());
+                    dragBoard.setContent(content);
+                    event.consume();
+                }
+            });
+            setOnDragDone(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent dragEvent) {
+                    System.out.println("Drag done on " + item);
+                    dragEvent.consume();
+                }
+            });
+            // ON TARGET NODE.
+//            setOnDragEntered(new EventHandler<DragEvent>() {
+//                @Override
+//                public void handle(DragEvent dragEvent) {
+//                    System.out.println("Drag entered on " + item);
+//                    dragEvent.consume();
+//                }
+//            });
+            setOnDragOver(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent dragEvent) {
+                    System.out.println("Drag over on " + item);
+                    if (dragEvent.getDragboard().hasString()) {
+                        String valueToMove = dragEvent.getDragboard().getString();
+                        if (!valueToMove.equals(item)) {
+                            // We accept the transfer!!!!!
+                            dragEvent.acceptTransferModes(TransferMode.MOVE);
+                        }
+                    }
+                    dragEvent.consume();
+                }
+            });
+
+//            setOnDragExited(new EventHandler<DragEvent>() {
+//                @Override
+//                public void handle(DragEvent dragEvent) {
+//                    System.out.println("Drag exited on " + item);
+//                    dragEvent.consume();
+//                }
+//            });
+
+            setOnDragDropped(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent dragEvent) {
+                    System.out.println("Drag dropped on " + item);
+                    String valueToMove = dragEvent.getDragboard().getString();
+                    TreeItem<String> itemToMove = search(parentTree.getRoot(), valueToMove);
+                    TreeItem<String> newParent = search(parentTree.getRoot(), item);
+                    // Remove from former parent.
+                    itemToMove.getParent().getChildren().remove(itemToMove);
+                    // Add to new parent.
+
+                    //
+                    //newParent.getChildren().add(itemToMove);
+
+                    newParent.getParent().getChildren().add(newParent.getParent().getChildren().indexOf(newParent), itemToMove);
+
+
+                    //newParent.setExpanded(true);
+                    dragEvent.consume();
+                }
+            });
+        }
+
+        private TreeItem<String> search(final TreeItem<String> currentNode, final String valueToSearch) {
+            TreeItem<String> result = null;
+            if (currentNode.getValue().equals(valueToSearch)) {
+                result = currentNode;
+            } else if (!currentNode.isLeaf()) {
+                for (TreeItem<String> child : currentNode.getChildren()) {
+                    result = search(child, valueToSearch);
+                    if (result != null) {
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+        private String item;
+
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            this.item = item;
+            String text = (item == null) ? null : item.toString();
+            setText(text);
+        }
     }
 
     public TreeView<String> getTreeView() {
