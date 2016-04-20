@@ -2,7 +2,7 @@
 
 Music player in javaFX for listening songs in your computer
 
-[![Download Music-Player](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/musicplayer-javafx/files/latest/download)
+[![Download Music-Player](https://sourceforge.net/sflogo.php?type=16&group_id=2677635)](https://sourceforge.net/p/musicplayer-javafx/)
 
 Releases (Sourceforge)
 -----
