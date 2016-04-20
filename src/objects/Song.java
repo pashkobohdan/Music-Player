@@ -29,7 +29,7 @@ public class Song {
             name = stripExtension(file.getName());
 
             pathOfName = fullName.split(Pattern.quote(File.separator));
-            pathName = pathOfName[pathOfName.length - 2];
+            setPathName(pathOfName[pathOfName.length - 2]);
 
             pathAbsoluteName = fullName.substring(INDEX_ZERO, fullName.lastIndexOf(File.separator));
         } catch (Exception e) {
@@ -44,7 +44,7 @@ public class Song {
             name = stripExtension(file.getName());
 
             pathOfName = file.getAbsolutePath().split(Pattern.quote(File.separator));
-            pathName = pathOfName[pathOfName.length - 2];
+            setPathName(pathOfName[pathOfName.length - 2]);
 
             pathAbsoluteName = fullName.substring(INDEX_ZERO, fullName.lastIndexOf(File.separator));
         } catch (Exception e) {
@@ -144,5 +144,9 @@ public class Song {
 
     public String getPathAbsoluteName() {
         return pathAbsoluteName;
+    }
+
+    public void setPathName(String pathName) {
+        this.pathName = pathName;
     }
 }

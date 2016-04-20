@@ -57,11 +57,11 @@ public class ControllerPlaylistList extends DialogController {
             return;
         }
         try {
-            new File(Controller.PLAYLISTS_FILES + textFiledName.getText() + Controller.PLAYLIST_EXPANTION).createNewFile();
+            new File(Data.PLAYLISTS_FILES + textFiledName.getText() + Data.PLAYLIST_EXPANTION).createNewFile();
 
             listNames.getItems().add(textFiledName.getText());
             listNames.getSelectionModel().selectLast();
-            textFiledName.setText(Controller.EMPTY_STRING);
+            textFiledName.setText(Data.EMPTY_STRING);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,7 +72,7 @@ public class ControllerPlaylistList extends DialogController {
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
-            if (new File(Controller.PLAYLISTS_FILES + listNames.getSelectionModel().getSelectedItem() + Controller.PLAYLIST_EXPANTION).delete()) {
+            if (new File(Data.PLAYLISTS_FILES + listNames.getSelectionModel().getSelectedItem() + Data.PLAYLIST_EXPANTION).delete()) {
                 listNames.getItems().remove(listNames.getSelectionModel().getSelectedItem());
             }
         }

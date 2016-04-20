@@ -1,6 +1,8 @@
 package objects;
 
 import controllers.Controller;
+import controllers.dialogControllers.Data;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LocaleInfo {
-    public static final String LOCALE_PATH = Controller.PROJECT_PATH + "/src/bundles";
-    public static final String MAIN_LANGUAGE_PATH = Controller.PROJECT_PATH + "/src/language/mainLanguage.txt";
+    public static final String LOCALE_PATH = Data.PROJECT_PATH + "/src/bundles";
+    public static final String MAIN_LANGUAGE_PATH = Data.PROJECT_PATH + "/src/language/mainLanguage.txt";
 
     public static int countLanguages() {
         return new File(LOCALE_PATH).listFiles().length;

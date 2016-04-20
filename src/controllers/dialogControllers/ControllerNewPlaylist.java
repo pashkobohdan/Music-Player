@@ -38,7 +38,7 @@ public class ControllerNewPlaylist extends DialogController {
     }
 
     public void buttonCancelPressed(ActionEvent actionEvent) {
-        playlistInfo.setPlaylistName(Controller.EMPTY_STRING);
+        playlistInfo.setPlaylistName(Data.EMPTY_STRING);
 
         (((Node) actionEvent.getSource()).getScene().getWindow()).hide();
     }

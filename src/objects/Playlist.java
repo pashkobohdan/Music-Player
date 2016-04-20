@@ -1,7 +1,9 @@
 package objects;
 
 import MyLibrary.ReadWrite;
+import com.sun.istack.internal.Nullable;
 import controllers.Controller;
+import controllers.dialogControllers.Data;
 import javafx.event.EventHandler;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TreeCell;
@@ -140,6 +142,15 @@ public class Playlist {
         return false;
     }
 
+    public Song getSearchSong(String name) {
+        for (Song argSong : getSongArrayList()) {
+            if (argSong.getName().equals(name)) {
+                return argSong;
+            }
+        }
+        return null;
+    }
+
     public void readPlaylist(String fileName) {
         songArrayList = new ArrayList<>();
         try {
@@ -158,7 +169,7 @@ public class Playlist {
             itemPath = new TreeItem<>(ROOT_PATH_NAME);
 
             Song nowSong;
-            String path = Controller.EMPTY_STRING;
+            String path = Data.EMPTY_STRING;
             for (String arg : files) {
                 if (isDirectory(arg)) {
                     if (!path.equals(arg)) {
@@ -185,10 +196,10 @@ public class Playlist {
     }
 
     private boolean isDirectory(String fileName) {
-        if (fileName.contains(Controller.MP3_FILE_EXPANTION) ||
-                fileName.contains(Controller.PNG_FILE_EXPANTION) ||
-                fileName.contains(Controller.JPG_FILE_EXPANTION) ||
-                fileName.contains(Controller.JPEG_FILE_EXPANTION)) {
+        if (fileName.contains(Data.MP3_FILE_EXPANTION) ||
+                fileName.contains(Data.PNG_FILE_EXPANTION) ||
+                fileName.contains(Data.JPG_FILE_EXPANTION) ||
+                fileName.contains(Data.JPEG_FILE_EXPANTION)) {
             return false;
         }
         return true;
@@ -206,7 +217,7 @@ public class Playlist {
             fileOutputStream.write((path + LINE_SEPARATOR).getBytes());
 
             for (Song song : songArrayList) {
-                if (song.getFullname().contains(Controller.MP3_FILE_EXPANTION)) {
+                if (song.getFullname().contains(Data.MP3_FILE_EXPANTION)) {
                     if (!path.equals(song.getPathName())) {
                         fileOutputStream.write((song.getPathName() + LINE_SEPARATOR).getBytes());
                         path = song.getPathName();
@@ -229,7 +240,7 @@ public class Playlist {
             number++;
         }
         for (File file : new File(path).listFiles()) {
-            if (file.isFile() && file.getAbsolutePath().contains(Controller.MP3_FILE_EXPANTION)) {
+            if (file.isFile() && file.getAbsolutePath().contains(Data.MP3_FILE_EXPANTION)) {
                 workSong = new Song(file);
                 workSong.setNumber(number++);
                 songArrayList.add(workSong);
@@ -279,7 +290,7 @@ public class Playlist {
     }
 
     public void setTreeViewFromSearchString(String searchString) {
-        if (searchString.equals(Controller.EMPTY_STRING)) {
+        if (searchString.equals(Data.EMPTY_STRING)) {
             treeView.setRoot(normalRootItem);
             return;
         }
@@ -322,12 +333,12 @@ public class Playlist {
     public void setTreeView(TreeView treeView) {
         this.treeView = treeView;
 
-//        treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
-//            @Override
-//            public TreeCell call(TreeView<String> param) {
-//                return new DnDCell(param);
-//            }
-//        });
+        treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
+            @Override
+            public TreeCell call(TreeView<String> param) {
+                return new DnDCell(param);
+            }
+        });
     }
 
     public class DnDCell extends TreeCell<String> {
@@ -340,10 +351,11 @@ public class Playlist {
             setOnDragDetected(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    System.out.println("Drag detected on " + item);
+                    //System.out.println("Drag detected on " + item);
                     if (item == null) {
                         return;
                     }
+
                     Dragboard dragBoard = startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
                     content.put(DataFormat.PLAIN_TEXT, item.toString());
@@ -354,22 +366,22 @@ public class Playlist {
             setOnDragDone(new EventHandler<DragEvent>() {
                 @Override
                 public void handle(DragEvent dragEvent) {
-                    System.out.println("Drag done on " + item);
+                    //System.out.println("Drag done on " + item);
                     dragEvent.consume();
                 }
             });
             // ON TARGET NODE.
-//            setOnDragEntered(new EventHandler<DragEvent>() {
-//                @Override
-//                public void handle(DragEvent dragEvent) {
-//                    System.out.println("Drag entered on " + item);
-//                    dragEvent.consume();
-//                }
-//            });
+            setOnDragEntered(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent dragEvent) {
+                    //System.out.println("Drag entered on " + item);
+                    dragEvent.consume();
+                }
+            });
             setOnDragOver(new EventHandler<DragEvent>() {
                 @Override
                 public void handle(DragEvent dragEvent) {
-                    System.out.println("Drag over on " + item);
+                    //System.out.println("Drag over on " + item);
                     if (dragEvent.getDragboard().hasString()) {
                         String valueToMove = dragEvent.getDragboard().getString();
                         if (!valueToMove.equals(item)) {
@@ -392,22 +404,35 @@ public class Playlist {
             setOnDragDropped(new EventHandler<DragEvent>() {
                 @Override
                 public void handle(DragEvent dragEvent) {
-                    System.out.println("Drag dropped on " + item);
+                    //System.out.println("Drag dropped on " + item);
                     String valueToMove = dragEvent.getDragboard().getString();
                     TreeItem<String> itemToMove = search(parentTree.getRoot(), valueToMove);
                     TreeItem<String> newParent = search(parentTree.getRoot(), item);
                     // Remove from former parent.
                     itemToMove.getParent().getChildren().remove(itemToMove);
-                    // Add to new parent.
+                    newParent.getParent().getChildren().add(newParent.getParent().getChildren().indexOf(newParent), itemToMove);//
 
-                    //
-                    //newParent.getChildren().add(itemToMove);
+                    Song moveToSong = getSearchSong(newParent.getValue());
+                    Song moveSong = getSearchSong(itemToMove.getValue());
+                    int moveToIndex = moveToSong.getNumber();
+                    int moveIndex = moveSong.getNumber();
+                    int moveListIndex = songArrayList.indexOf(moveSong);
+                    int moveToListIndex = songArrayList.indexOf(moveToSong);
 
-                    newParent.getParent().getChildren().add(newParent.getParent().getChildren().indexOf(newParent), itemToMove);
+                    if (moveToIndex < moveIndex) {
+                        for (int i = moveToListIndex ; i < moveListIndex; i++) {
+                            songArrayList.get(i).setNumber(songArrayList.get(i).getNumber() + 1);
+                        }
+                        moveSong.setNumber(moveToIndex);
+                        moveSong.setPathName(moveToSong.getPathName());
+                    }
 
+                    songArrayList.remove(moveSong);
+                    songArrayList.add(songArrayList.indexOf(moveToSong), moveSong);
 
-                    //newParent.setExpanded(true);
                     dragEvent.consume();
+
+                    writePlaylist();
                 }
             });
         }
@@ -426,6 +451,7 @@ public class Playlist {
             }
             return result;
         }
+
         private String item;
 
         @Override

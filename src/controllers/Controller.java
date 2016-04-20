@@ -29,36 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Controller implements Initializable {
-    public static final int MAX_LENGTH_LABEL = 40;
-    public static final int MIN_CHANGE_DURATION = 50;
-    public static final int MIN_CHANGE_SLIDER_DURATION_VALUE = 3;
-    public static final int DEFAULT_VOLUME = 50;
-    public static final int DOUBLE_CLICK = 2;
-    public static final int SECOND_IN_MINUTE = 60;
-    public static final int sleepHalfSecond = 500;
-    public static final double MAX_SLIDER_VALUE = 100.0;
-    public static final double MIN_VOLUME = 0.0;
-    public static final String EMPTY_STRING = "";
-    public static final String PROJECT_PATH = System.getProperty("user.dir");
-    public static final String PICTURES_PATH = PROJECT_PATH + "/src/pictures";
-    public static final String PICTURES_FILES = PICTURES_PATH + "/";
-    public static final String PLAYLISTS_PATH = PROJECT_PATH + "/src/playlists";
-    public static final String PLAYLISTS_FILES = PLAYLISTS_PATH + "/";
-    public static final String PLAYLIST_EXPANTION = ".mppl";
-    public static final String TIME_FORMAT = "%02d:%02d";
-    public static final String DEFAULT_TIME = "00:00";
-    public static final String TIME_FORMAT_WITH_HOURS = "%02d:%02d:%02d";
-    public static final String CUSTOM_BUTTON_PRESSED_STYLE = "-fx-background-color: burlywood";
-    public static final String CUSTOM_BUTTON_DEFAULT_STYLE = "-fx-background-color: wheat; ";
-    public static final String PNG_FILE_EXPANTION = ".png";
-    public static final String JPG_FILE_EXPANTION = ".jpg";
-    public static final String JPEG_FILE_EXPANTION = ".jpeg";
-    public static final String MP3_FILE_EXPANTION = ".mp3";
-    public static final String STOP_TIME_DIALOG_PATH = "../fxml/stopTimeDialog.fxml";
-    public static final String STOP_COUNTER_DIALOG_PATH = "../fxml/stopCounterDialog.fxml";
-    public static final String PLAYLIST_LIST_DIALOG_PATH = "../fxml/playlistList.fxml";
-    public static final String SETTINGS_DIALOG_PATH = "../fxml/settings.fxml";
-    public static final File DEFAULT_SONG_IMAGE = new File(PICTURES_FILES + "defaultSongImage" + PNG_FILE_EXPANTION);
+
 
     private ResourceBundle resourceBundle;
     private TreeItem<String> treeItem;
@@ -70,7 +41,7 @@ public class Controller implements Initializable {
     private double durationDouble;
     private double currentDurationDouble;
     private double oldValueDouble, newValueDouble;
-    private double volume = DEFAULT_VOLUME;
+    private double volume = Data.DEFAULT_VOLUME;
     private int index;
 
     private boolean isShuffle = false;
@@ -193,7 +164,7 @@ public class Controller implements Initializable {
 
     private void initStopTimeWindow() {
         try {
-            fxmlLoaderStopTime.setLocation(getClass().getResource(STOP_TIME_DIALOG_PATH));
+            fxmlLoaderStopTime.setLocation(getClass().getResource(Data.STOP_TIME_DIALOG_PATH));
             parentStopTime = fxmlLoaderStopTime.load();
             stopTimeController = fxmlLoaderStopTime.getController();
             stopTimeController.setResourceBundle(resourceBundle);
@@ -204,7 +175,7 @@ public class Controller implements Initializable {
 
     private void initStopCountWindow() {
         try {
-            fxmlLoaderStopCount.setLocation(getClass().getResource(STOP_COUNTER_DIALOG_PATH));
+            fxmlLoaderStopCount.setLocation(getClass().getResource(Data.STOP_COUNTER_DIALOG_PATH));
             parentStopCount = fxmlLoaderStopCount.load();
             stopCountController = fxmlLoaderStopCount.getController();
             stopCountController.setResourceBundle(resourceBundle);
@@ -215,7 +186,7 @@ public class Controller implements Initializable {
 
     private void initPlaylistListWindow() {
         try {
-            fxmlLoaderPlaylistList.setLocation(getClass().getResource(PLAYLIST_LIST_DIALOG_PATH));
+            fxmlLoaderPlaylistList.setLocation(getClass().getResource(Data.PLAYLIST_LIST_DIALOG_PATH));
             parentPlaylistList = fxmlLoaderPlaylistList.load();
             playlistListController = fxmlLoaderPlaylistList.getController();
             playlistListController.setResourceBundle(resourceBundle);
@@ -226,7 +197,7 @@ public class Controller implements Initializable {
 
     private void initSettingsWindow() {
         try {
-            fxmlLoaderSettings.setLocation(getClass().getResource(SETTINGS_DIALOG_PATH));
+            fxmlLoaderSettings.setLocation(getClass().getResource(Data.SETTINGS_DIALOG_PATH));
             parentSettings = fxmlLoaderSettings.load();
             controllerSettings = fxmlLoaderSettings.getController();
             controllerSettings.setResourceBundle(resourceBundle);
@@ -264,10 +235,10 @@ public class Controller implements Initializable {
                     getCurrentPlaylist().getCurrentSong().getMediaPlayer() != null) {
                 oldValueDouble = oldValue.doubleValue();
                 newValueDouble = newValue.doubleValue();
-                if (Math.abs(oldValueDouble - newValueDouble) > MIN_CHANGE_SLIDER_DURATION_VALUE) {
+                if (Math.abs(oldValueDouble - newValueDouble) > Data.MIN_CHANGE_SLIDER_DURATION_VALUE) {
                     getCurrentPlaylist().getCurrentSong().getMediaPlayer().seek(
                             new Duration(newValueDouble * getCurrentPlaylist().getCurrentSong().
-                                    getMediaPlayer().getTotalDuration().toMillis() / MAX_SLIDER_VALUE)
+                                    getMediaPlayer().getTotalDuration().toMillis() / Data.MAX_SLIDER_VALUE)
                     );
                 }
             }
@@ -278,16 +249,16 @@ public class Controller implements Initializable {
             newValueDouble = newValue.doubleValue();
             volume = newValueDouble;
             if (getCurrentPlaylist().getCurrentSong().getMediaPlayer() != null) {
-                getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(volume / MAX_SLIDER_VALUE);
+                getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(volume / Data.MAX_SLIDER_VALUE);
             }
-            if (newValueDouble != MIN_VOLUME) {
+            if (newValueDouble != Data.MIN_VOLUME) {
                 if (isMute) {
                     isMute = false;
                     refreshMuteButton();
                 }
             } else {
                 isMute = true;
-                volume = MIN_VOLUME;
+                volume = Data.MIN_VOLUME;
                 refreshMuteButton();
             }
         });
@@ -295,7 +266,7 @@ public class Controller implements Initializable {
 
     private void initTreeMouseClickedListener() {
         treeView.setOnMouseClicked((event) -> {
-            if (event.getClickCount() == DOUBLE_CLICK && treeView.getRoot() != null) {
+            if (event.getClickCount() == Data.DOUBLE_CLICK && treeView.getRoot() != null) {
                 treeItem = treeView.getSelectionModel().getSelectedItem();
                 if (treeItem != treeView.getRoot() &&
                         getCurrentPlaylist().setSearchSong(treeItem.getValue(), treeItem.getParent().getValue())) {
@@ -309,15 +280,15 @@ public class Controller implements Initializable {
     private void readPlaylistList() {
         playlistNames = FXCollections.observableArrayList();
 
-        if (new File(PLAYLISTS_PATH) != null && new File(PLAYLISTS_PATH).listFiles().length < 1) {
+        if (new File(Data.PLAYLISTS_PATH) != null && new File(Data.PLAYLISTS_PATH).listFiles().length < 1) {
             try {
-                new File(PLAYLISTS_FILES + "default playlist" + PLAYLIST_EXPANTION).createNewFile();
+                new File(Data.PLAYLISTS_FILES + "default playlist" + Data.PLAYLIST_EXPANTION).createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
             }
         }
-        for (File file : new File(PLAYLISTS_PATH).listFiles()) {
+        for (File file : new File(Data.PLAYLISTS_PATH).listFiles()) {
             if (file.isFile()) {
                 playlistNames.add(Song.stripExtension(file.getName()));
             }
@@ -356,7 +327,7 @@ public class Controller implements Initializable {
         }
         currentPlaylist = new Playlist(name);
         getCurrentPlaylist().setTreeView(treeView);
-        getCurrentPlaylist().readPlaylist(PLAYLISTS_FILES + getCurrentPlaylist().getPlaylistName() + PLAYLIST_EXPANTION);
+        getCurrentPlaylist().readPlaylist(Data.PLAYLISTS_FILES + getCurrentPlaylist().getPlaylistName() + Data.PLAYLIST_EXPANTION);
         getCurrentPlaylist().setFirstSong();
 
         endOfSongRunnable = () -> {
@@ -392,22 +363,22 @@ public class Controller implements Initializable {
             if (getCurrentPlaylist().getCurrentSong() == null) {
                 return;
             }
-            if (getCurrentPlaylist().getCurrentSong().getName().length() <= MAX_LENGTH_LABEL) {
+            if (getCurrentPlaylist().getCurrentSong().getName().length() <= Data.MAX_LENGTH_LABEL) {
                 labelSongName.setText(getCurrentPlaylist().getCurrentSong().getName());
             } else {
-                labelSongName.setText(getCurrentPlaylist().getCurrentSong().getName().substring(Song.INDEX_ZERO, MAX_LENGTH_LABEL));
+                labelSongName.setText(getCurrentPlaylist().getCurrentSong().getName().substring(Song.INDEX_ZERO, Data.MAX_LENGTH_LABEL));
             }
 
             chooseItemTreeView();
 
-            labelSongDuration.setText(DEFAULT_TIME);
+            labelSongDuration.setText(Data.DEFAULT_TIME);
 
             if (getCurrentPlaylist().getCurrentSong().getMediaPlayer() == null) {
                 return;
             }
 
             getCurrentPlaylist().getCurrentSong().getMediaPlayer().setOnReady(() -> {
-                if (getCurrentPlaylist().getCurrentSong().getMediaPlayer() != null && labelSongDuration.getText().equals(DEFAULT_TIME)) {
+                if (getCurrentPlaylist().getCurrentSong().getMediaPlayer() != null && labelSongDuration.getText().equals(Data.DEFAULT_TIME)) {
                     duration = getCurrentPlaylist().getCurrentSong().getMediaPlayer().getTotalDuration();
                     currentDurationDouble = duration.toSeconds();
                     setLabelDuration(currentDurationDouble);
@@ -421,25 +392,25 @@ public class Controller implements Initializable {
 
                     duration = getCurrentPlaylist().getCurrentSong().getMediaPlayer().getTotalDuration();
 
-                    if (labelSongDuration.getText().equals(DEFAULT_TIME)) {
+                    if (labelSongDuration.getText().equals(Data.DEFAULT_TIME)) {
                         setLabelDuration(duration.toSeconds());
                     }
 
-                    if (Math.abs(oldValueDouble - newValueDouble) > MIN_CHANGE_DURATION) {
+                    if (Math.abs(oldValueDouble - newValueDouble) > Data.MIN_CHANGE_DURATION) {
                         currentDuration = getCurrentPlaylist().getCurrentSong().getMediaPlayer().getCurrentTime();
                         durationDouble = duration.toSeconds();
                         currentDurationDouble = currentDuration.toSeconds();
 
-                        sliderStatus.setValue(MAX_SLIDER_VALUE * currentDurationDouble / durationDouble);
-                        labelSongNowTime.setText(String.format(TIME_FORMAT,
-                                (int) (currentDurationDouble / SECOND_IN_MINUTE),
-                                (int) (currentDurationDouble % SECOND_IN_MINUTE))
+                        sliderStatus.setValue(Data.MAX_SLIDER_VALUE * currentDurationDouble / durationDouble);
+                        labelSongNowTime.setText(String.format(Data.TIME_FORMAT,
+                                (int) (currentDurationDouble / Data.SECOND_IN_MINUTE),
+                                (int) (currentDurationDouble % Data.SECOND_IN_MINUTE))
                         );
                     }
                 }
             });
 
-            getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(volume / MAX_SLIDER_VALUE);
+            getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(volume / Data.MAX_SLIDER_VALUE);
             reSetEndListener();
         } catch (Exception e) {
             e.printStackTrace();
@@ -447,9 +418,9 @@ public class Controller implements Initializable {
     }
 
     private void setLabelDuration(double toralDuration) {
-        labelSongDuration.setText(String.format(TIME_FORMAT,
-                (int) (toralDuration / SECOND_IN_MINUTE),
-                (int) (toralDuration % SECOND_IN_MINUTE)));
+        labelSongDuration.setText(String.format(Data.TIME_FORMAT,
+                (int) (toralDuration / Data.SECOND_IN_MINUTE),
+                (int) (toralDuration % Data.SECOND_IN_MINUTE)));
     }
 
     private void reSetEndListener() {
@@ -464,9 +435,9 @@ public class Controller implements Initializable {
 
     private void refreshMuteButton() {
         if (isMute) {
-            buttonMute.setStyle(CUSTOM_BUTTON_PRESSED_STYLE);
+            buttonMute.setStyle(Data.CUSTOM_BUTTON_PRESSED_STYLE);
         } else {
-            buttonMute.setStyle(CUSTOM_BUTTON_DEFAULT_STYLE);
+            buttonMute.setStyle(Data.CUSTOM_BUTTON_DEFAULT_STYLE);
         }
     }
 
@@ -477,12 +448,12 @@ public class Controller implements Initializable {
             }
 
             isFindEXPANTION = false;
-            pictureFile = new File(EMPTY_STRING);
+            pictureFile = new File(Data.EMPTY_STRING);
             for (File file : new File(getCurrentPlaylist().getCurrentSong().getPathAbsoluteName()).
                     listFiles((dir, name) ->
-                            name.endsWith(PNG_FILE_EXPANTION) ||
-                                    name.endsWith(JPG_FILE_EXPANTION) ||
-                                    name.endsWith(JPEG_FILE_EXPANTION))) {
+                            name.endsWith(Data.PNG_FILE_EXPANTION) ||
+                                    name.endsWith(Data.JPG_FILE_EXPANTION) ||
+                                    name.endsWith(Data.JPEG_FILE_EXPANTION))) {
                 isFindEXPANTION = true;
                 pictureFile = file;
                 if (getCurrentPlaylist().getCurrentSong().getName().contains(Song.stripExtension(file.getName()))) {
@@ -494,7 +465,7 @@ public class Controller implements Initializable {
             if (isFindEXPANTION) {
                 songImage.setImage(new Image(pictureFile.toURI().toString()));
             } else {
-                songImage.setImage(new Image(DEFAULT_SONG_IMAGE.toURI().toString()));
+                songImage.setImage(new Image(Data.DEFAULT_SONG_IMAGE.toURI().toString()));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -510,7 +481,7 @@ public class Controller implements Initializable {
     }
 
     private void createNewPlaylist() {
-        playlistInfo = new PlaylistInfo(EMPTY_STRING);
+        playlistInfo = new PlaylistInfo(Data.EMPTY_STRING);
         newPlaylistDialogController.setPlaylistInfo(playlistInfo);
         if (newPlaylistDialogStage == null) {
             newPlaylistDialogStage = new Stage();
@@ -524,9 +495,9 @@ public class Controller implements Initializable {
         }
 
         newPlaylistDialogStage.showAndWait();
-        if (!playlistInfo.getPlaylistName().equals(EMPTY_STRING)) {
+        if (!playlistInfo.getPlaylistName().equals(Data.EMPTY_STRING)) {
             try {
-                new File(PLAYLISTS_FILES + playlistInfo.getPlaylistName() + PLAYLIST_EXPANTION).createNewFile();
+                new File(Data.PLAYLISTS_FILES + playlistInfo.getPlaylistName() + Data.PLAYLIST_EXPANTION).createNewFile();
                 playlistNames.add(playlistInfo.getPlaylistName());
                 if (playlistNames.size() < 2) {
                     currentPlaylist = new Playlist(playlistInfo.getPlaylistName());
@@ -579,7 +550,7 @@ public class Controller implements Initializable {
         stopCountStage.showAndWait();
 
         if (!stopCountController.isCancel()) {
-            labelCountLeft.setText(EMPTY_STRING);
+            labelCountLeft.setText(Data.EMPTY_STRING);
         }
 
         if (!stopCountController.isCancel() && stopCount.isChanged()) {
@@ -624,7 +595,7 @@ public class Controller implements Initializable {
     }
 
     private void refreshCountLabel() {
-        labelCountLeft.setText(stopCount.getCount() + EMPTY_STRING);
+        labelCountLeft.setText(stopCount.getCount() + Data.EMPTY_STRING);
     }
 
     public Stage getMainStage() {
@@ -681,18 +652,18 @@ public class Controller implements Initializable {
     public void buttonShufflePressed(ActionEvent actionEvent) {
         isShuffle = !isShuffle;
         if (isShuffle) {
-            buttonShuffle.setStyle(CUSTOM_BUTTON_PRESSED_STYLE);
+            buttonShuffle.setStyle(Data.CUSTOM_BUTTON_PRESSED_STYLE);
         } else {
-            buttonShuffle.setStyle(CUSTOM_BUTTON_DEFAULT_STYLE);
+            buttonShuffle.setStyle(Data.CUSTOM_BUTTON_DEFAULT_STYLE);
         }
     }
 
     public void buttonReplayPressed(ActionEvent actionEvent) {
         isRePlay = !isRePlay;
         if (isRePlay) {
-            buttonReplay.setStyle(CUSTOM_BUTTON_PRESSED_STYLE);
+            buttonReplay.setStyle(Data.CUSTOM_BUTTON_PRESSED_STYLE);
         } else {
-            buttonReplay.setStyle(CUSTOM_BUTTON_DEFAULT_STYLE);
+            buttonReplay.setStyle(Data.CUSTOM_BUTTON_DEFAULT_STYLE);
         }
     }
 
@@ -701,16 +672,16 @@ public class Controller implements Initializable {
         refreshMuteButton();
         if (isMute) {
             if (getCurrentPlaylist().getCurrentSong().getMediaPlayer() != null) {
-                getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(MIN_VOLUME);
+                getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(Data.MIN_VOLUME);
             }
-            volume = MIN_VOLUME;
-            sliderVolume.setValue(MIN_VOLUME);
+            volume = Data.MIN_VOLUME;
+            sliderVolume.setValue(Data.MIN_VOLUME);
         } else {
             if (getCurrentPlaylist().getCurrentSong().getMediaPlayer() != null) {
-                getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(DEFAULT_VOLUME / MAX_SLIDER_VALUE);
+                getCurrentPlaylist().getCurrentSong().getMediaPlayer().setVolume(Data.DEFAULT_VOLUME / Data.MAX_SLIDER_VALUE);
             }
-            volume = DEFAULT_VOLUME;
-            sliderVolume.setValue(DEFAULT_VOLUME);
+            volume = Data.DEFAULT_VOLUME;
+            sliderVolume.setValue(Data.DEFAULT_VOLUME);
         }
     }
 
@@ -769,7 +740,7 @@ public class Controller implements Initializable {
 
         public void stopNow() {
             isStop.set(true);
-            Platform.runLater(() -> labelLeftTime.setText(EMPTY_STRING));
+            Platform.runLater(() -> labelLeftTime.setText(Data.EMPTY_STRING));
         }
 
         public void run() {
@@ -778,16 +749,16 @@ public class Controller implements Initializable {
                     if (isStop.get()) {
                         break;
                     } else {
-                        Platform.runLater(() -> labelLeftTime.setText(String.format(TIME_FORMAT_WITH_HOURS,
-                                (second.get() / (SECOND_IN_MINUTE * SECOND_IN_MINUTE)),
-                                ((second.get() % (SECOND_IN_MINUTE * SECOND_IN_MINUTE)) / SECOND_IN_MINUTE),
-                                (second.get() % SECOND_IN_MINUTE))));
+                        Platform.runLater(() -> labelLeftTime.setText(String.format(Data.TIME_FORMAT_WITH_HOURS,
+                                (second.get() / (Data.SECOND_IN_MINUTE * Data.SECOND_IN_MINUTE)),
+                                ((second.get() % (Data.SECOND_IN_MINUTE * Data.SECOND_IN_MINUTE)) / Data.SECOND_IN_MINUTE),
+                                (second.get() % Data.SECOND_IN_MINUTE))));
 
-                        Thread.sleep(sleepHalfSecond);
+                        Thread.sleep(Data.sleepHalfSecond);
 
-                        Platform.runLater(() -> labelLeftTime.setText(EMPTY_STRING));
+                        Platform.runLater(() -> labelLeftTime.setText(Data.EMPTY_STRING));
 
-                        Thread.sleep(sleepHalfSecond);
+                        Thread.sleep(Data.sleepHalfSecond);
 
 
                         second.decrementAndGet();

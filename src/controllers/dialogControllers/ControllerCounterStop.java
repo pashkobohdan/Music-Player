@@ -58,7 +58,7 @@ public class ControllerCounterStop extends DialogController implements Initializ
     public void refreshStopCountInfo() {
         try {
             stopCount.setCount(Integer.parseInt(textFieldCount.getText()));
-            textFieldCount.setText(Controller.EMPTY_STRING);
+            textFieldCount.setText(Data.EMPTY_STRING);
         } catch (NumberFormatException e) {
             stopCount.setCount(comboBoxCount.getValue());
         }
@@ -68,7 +68,7 @@ public class ControllerCounterStop extends DialogController implements Initializ
     public void deleteStopCount() {
         stopCount.setCount(StopCount.DEFAULT_COUNT);
         comboBoxCount.getSelectionModel().select(StopCount.DEFAULT_COUNT);
-        textFieldCount.setText(StopCount.DEFAULT_COUNT + Controller.EMPTY_STRING);
+        textFieldCount.setText(StopCount.DEFAULT_COUNT + Data.EMPTY_STRING);
 
         refreshStopCountInfo();
     }
@@ -98,7 +98,7 @@ public class ControllerCounterStop extends DialogController implements Initializ
         this.stopCount = stopCount;
         isCancel = false;
 
-        textFieldCount.setText(stopCount.getCount() + Controller.EMPTY_STRING);
+        textFieldCount.setText(stopCount.getCount() + Data.EMPTY_STRING);
         comboBoxCount.getSelectionModel().select(stopCount.getCount());
     }
 

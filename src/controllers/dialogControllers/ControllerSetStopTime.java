@@ -34,10 +34,10 @@ public class ControllerSetStopTime extends DialogController implements Initializ
         for (int i = Song.INDEX_ZERO; i < hoursInDay; i++) {
             comboboxHours.getItems().add(i);
         }
-        for (int i = Song.INDEX_ZERO; i < Controller.SECOND_IN_MINUTE; i++) {
+        for (int i = Song.INDEX_ZERO; i < Data.SECOND_IN_MINUTE; i++) {
             comboboxMinute.getItems().add(i);
         }
-        for (int i = Song.INDEX_ZERO; i < Controller.SECOND_IN_MINUTE; i++) {
+        for (int i = Song.INDEX_ZERO; i < Data.SECOND_IN_MINUTE; i++) {
             comboboxSecond.getItems().add(i);
         }
     }
